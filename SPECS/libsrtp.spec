@@ -3,7 +3,7 @@
 
 Name:		lib%{shortname}
 Version:	1.4.4
-Release:	7.%{cvsver}%{?dist}
+Release:	9.%{cvsver}%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
@@ -89,6 +89,12 @@ cp -a %{SOURCE2} %{buildroot}%{_includedir}/%{shortname}/config.h
 %{_libdir}/*.so
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.4.4-9.20101004cvs
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.4.4-8.20101004cvs
+- Mass rebuild 2013-12-27
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-7.20101004cvs
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
