@@ -3,7 +3,7 @@
 
 Name:		lib%{shortname}
 Version:	1.4.4
-Release:	9.%{cvsver}%{?dist}
+Release:	10.%{cvsver}%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
@@ -89,6 +89,10 @@ cp -a %{SOURCE2} %{buildroot}%{_includedir}/%{shortname}/config.h
 %{_libdir}/*.so
 
 %changelog
+* Tue Sep 16 2014 Jan Grulich <jgrulich@redhat.com> - 1.4.4-10.20101004cvs
+- Add detection for aarch64
+  Resolves: bz#1141907
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.4.4-9.20101004cvs
 - Mass rebuild 2014-01-24
 

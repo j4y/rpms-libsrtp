@@ -9,7 +9,7 @@
 #endif
 #define srtp_multilib_redirection_h
 
-#if defined(__x86_64__) || defined(__PPC64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__)
+#if defined(__x86_64__) || defined(__PPC64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__) || defined(__aarch64__)
 #include "srtp/config-64.h"
 #else
 #include "srtp/config-32.h"
