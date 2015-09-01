@@ -3,7 +3,7 @@
 
 Name:		lib%{shortname}
 Version:	1.4.4
-Release:	1.affectiva%{?dist}
+Release:	100.affectiva%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
