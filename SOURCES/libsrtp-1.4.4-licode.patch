@@ -1,0 +1,20 @@
+--- srtp-orig/srtp/srtp.c	2015-08-28 08:47:14.000000000 -0400
++++ srtp/srtp/srtp.c	2015-07-30 16:40:55.000000000 -0400
+@@ -1017,7 +1017,7 @@
+     
+     /* check replay database */
+     status = rdbx_check(&stream->rtp_rdbx, delta);
+-    if (status)
++    if (status && stream->allow_repeat_tx==0)
+       return status;
+   }
+ 
+@@ -1911,7 +1911,7 @@
+   seq_num = ntohl(*trailer) & SRTCP_INDEX_MASK;
+   debug_print(mod_srtp, "srtcp index: %x", seq_num);
+   status = rdb_check(&stream->rtcp_rdb, seq_num);
+-  if (status)
++  if (status && stream->allow_repeat_tx==0)
+     return status;
+ 
+   /* 

@@ -3,7 +3,7 @@
 
 Name:		lib%{shortname}
 Version:	1.4.4
-Release:	10.%{cvsver}%{?dist}
+Release:	1.affectiva%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
@@ -11,7 +11,7 @@ URL:		http://srtp.sourceforge.net
 # Upstream 1.4.4 tarball is a bit dated, need to use cvs
 # cvs -d:pserver:anonymous@srtp.cvs.sourceforge.net:/cvsroot/srtp co -P srtp
 # tar cvfj srtp-1.4.4-20101004cvs.tar.bz2 srtp/
-Source0:	%{shortname}-%{version}-%{cvsver}.tar.bz2
+Source0:	https://github.com/cisco/lib%{shortname}/archive/c752816.tar.gz
 # Pkgconfig goodness
 Source1:	libsrtp.pc
 # Universal config.h
@@ -20,6 +20,8 @@ Source2:	config.h
 # Seriously. Who doesn't do shared libs these days?
 # And how does Chromium always manage to find these projects and use them?
 Patch0:		libsrtp-1.4.4-shared.patch
+# the changes between the version of srtp embedded in licode and the upstream version
+Patch1:		libsrtp-1.4.4-licode.patch
 
 %description
 This package provides an implementation of the Secure Real-time
@@ -37,8 +39,9 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{shortname}
+%setup -q -n libsrtp-c7528166a574fce6203d1f0847a45f1db9caf21f
 %patch0 -p1 -b .shared
+%patch1 -p1 -b .shared
 
 # Fix end-of-line encoding
 sed -i 's/\r//g' doc/draft-irtf-cfrg-icm-00.txt
