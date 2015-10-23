@@ -4,8 +4,8 @@ libdir=@LIBDIR@
 includedir=@INCLUDEDIR@
 
 Name: libsrtp
-Description: Library for SRTP (Secure Realtime Transport Protocol)
-Version: 1.5.2
+Description: Secure Real-time Transport Protocol library
+Version: 1.4.4
 URL: http://srtp.sourceforge.net
 Requires:
 Conflicts:

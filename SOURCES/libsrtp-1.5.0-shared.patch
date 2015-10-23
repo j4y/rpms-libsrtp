@@ -1,16 +1,7 @@
-diff -up srtp/Makefile.in.shared srtp/Makefile.in
---- srtp/Makefile.in.shared	2010-05-21 13:45:35.000000000 -0400
-+++ srtp/Makefile.in	2010-10-04 15:53:29.132116130 -0400
-@@ -8,7 +8,7 @@
- # runtest       runs test applications 
- # test		builds test applications
- # libcrypt.a	static library implementing crypto engine
--# libsrtp.a	static library implementing srtp
-+# libsrtp.so	shared library implementing srtp
- # clean		removes objects, libs, and executables
- # distribution  cleans and builds a .tgz
- # tags          builds etags file from all .c and .h files
-@@ -97,13 +97,13 @@ kernel  = crypto/kernel/crypto_kernel.o 
+diff -up libsrtp-1.5.0/Makefile.in.shared libsrtp-1.5.0/Makefile.in
+--- libsrtp-1.5.0/Makefile.in.shared	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.0/Makefile.in	2014-11-14 10:14:01.604954699 -0500
+@@ -113,17 +113,13 @@ kernel  = crypto/kernel/crypto_kernel.o
  
  cryptobj =  $(ciphers) $(hashes) $(math) $(stat) $(kernel) $(replay)
  
@@ -22,13 +13,17 @@ diff -up srtp/Makefile.in.shared srtp/Makefile.in
 -libsrtp.a: $(srtpobj) $(cryptobj) $(gdoi)
 -	ar cr libsrtp.a $^
 -	$(RANLIB) libsrtp.a
+-
+-libsrtp.so: $(srtpobj) $(cryptobj) $(gdoi) 
+-	$(CC) -shared -Wl,-soname,libsrtp.so \
+-	    -o libsrtp.so $^ $(LDFLAGS)
 +libsrtp.so: $(srtpobj) $(cryptobj) $(gdoi)
-+	$(COMPILE) -shared -pthread -lm -Wl,--no-undefined -Wl,-soname,$@.0 -z noexecstack -o $@.0.0.0 $^
-+	ln -s $@.0.0.0 $@	
++	$(COMPILE) -shared -pthread -lm -Wl,--no-undefined -Wl,-soname,$@.1 -z noexecstack -o $@.1.0.0 $^
++	ln -s $@.1.0.0 $@	
  
  # libcryptomath.a contains general-purpose routines that are used to
  # generate tables and verify cryptoalgorithm implementations - this
-@@ -127,19 +127,19 @@ testapp = $(crypto_testapp) test/srtp_dr
+@@ -150,19 +146,19 @@ testapp = $(crypto_testapp) test/srtp_dr
  	  test/roc_driver$(EXE) test/rdbx_driver$(EXE) test/rtpw$(EXE) \
  	  test/dtls_srtp_driver$(EXE)
  
@@ -53,23 +48,30 @@ diff -up srtp/Makefile.in.shared srtp/Makefile.in
  
  test: $(testapp)
  	@echo "Build done. Please run '$(MAKE) runtest' to run self tests."
-@@ -197,16 +197,16 @@ install:
+@@ -220,7 +216,7 @@ install:
  	cp $(srcdir)/include/*.h $(DESTDIR)$(includedir)/srtp  
  	cp $(srcdir)/crypto/include/*.h $(DESTDIR)$(includedir)/srtp
  	if [ "$(srcdir)" != "." ]; then cp crypto/include/*.h $(DESTDIR)$(includedir)/srtp; fi
 -	if [ -f libsrtp.a ]; then cp libsrtp.a $(DESTDIR)$(libdir)/; fi
 +	if [ -f libsrtp.so.0.0.0 ]; then cp libsrtp.so.0.0.0 $(DESTDIR)$(libdir)/; fi
+ 	if [ -f libsrtp.so ]; then cp libsrtp.so $(DESTDIR)$(libdir)/; fi
+ 	if [ "$(pkgconfig_DATA)" != "" ]; then \
+ 		$(INSTALL) -d $(DESTDIR)$(pkgconfigdir); \
+@@ -229,7 +225,7 @@ install:
  
  uninstall:
  	rm -f $(DESTDIR)$(includedir)/srtp/*.h
 -	rm -f $(DESTDIR)$(libdir)/libsrtp.a
 +	rm -f $(DESTDIR)$(libdir)/libsrtp.so*
+ 	rm -f $(DESTDIR)$(libdir)/libsrtp.so
  	-rmdir $(DESTDIR)$(includedir)/srtp
+ 	if [ "$(pkgconfig_DATA)" != "" ]; then \
+@@ -238,7 +234,7 @@ uninstall:
  
  clean:
  	rm -rf $(cryptobj) $(srtpobj) $(cryptomath) TAGS \
--        libcryptomath.a libsrtp.a core *.core test/core
-+        libcryptomath.a libsrtp.so* core *.core test/core
+-        libcryptomath.a libsrtp.a libsrtp.so core *.core test/core
++				libcryptomath.a libsrtp.so* core *.core test/core
  	for a in * */* */*/*; do			\
                if [ -f "$$a~" ] ; then rm -f $$a~; fi;	\
          done;

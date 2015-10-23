@@ -1,23 +1,28 @@
 %global shortname srtp
-%global cvsver 20101004cvs
 
-Name:		lib%{shortname}
-Version:	1.5.2
-Release:	1.affectiva%{?dist}
+Name:		libsrtp
+Version:	1.5.0
+Release:	2%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
-URL:		http://srtp.sourceforge.net
-Source0:	https://github.com/cisco/libsrtp/archive/v1.5.2.tar.gz
+URL:		https://github.com/cisco/libsrtp
+Source0:	https://github.com/cisco/libsrtp/archive/v%{version}.tar.gz
 # Pkgconfig goodness
 Source1:	libsrtp.pc
 # Universal config.h
 Source2:	config.h
 
+# Seriously. Who doesn't do shared libs these days?
+# And how does Chromium always manage to find these projects and use them?
+Patch0:		libsrtp-1.5.0-shared.patch
+Patch1:		libsrtp-srtp_aes_encrypt.patch
+Patch2:		libsrtp-sha1-name-fix.patch
+
 %description
 This package provides an implementation of the Secure Real-time
 Transport Protocol (SRTP), the Universal Security Transform (UST), and
-a supporting cryptographic kernel. 
+a supporting cryptographic kernel.
 
 %package devel
 Summary:	Development files for %{name}
@@ -30,7 +35,10 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n libsrtp-1.5.2
+%setup -q -n %{name}-%{version}
+%patch0 -p1 -b .shared
+%patch1 -p1 -b .srtp_aes_encrypt
+%patch2 -p1 -b .sha1-name-fix
 
 # Fix end-of-line encoding
 sed -i 's/\r//g' doc/draft-irtf-cfrg-icm-00.txt
@@ -43,15 +51,16 @@ sed -i 's/-z noexecstack//' Makefile.in
 
 %build
 export CFLAGS="%{optflags} -fPIC"
-%configure --disable-static
+%configure
 make %{?_smp_mflags}
 
 %install
 make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 pushd %{buildroot}%{_libdir}
-ln -sf libsrtp.so.0.0.0 libsrtp.so
-ln -sf libsrtp.so.0.0.0 libsrtp.so.0
+mv libsrtp.so libsrtp.so.1.0.0
+ln -sf libsrtp.so.1.0.0 libsrtp.so
+ln -sf libsrtp.so.1.0.0 libsrtp.so.1
 popd
 
 # Install the pkg-config file
@@ -69,8 +78,6 @@ cp -a %{SOURCE2} %{buildroot}%{_includedir}/%{shortname}/config.h
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%define _unpackaged_files_terminate_build 0
-
 %files
 %defattr(-,root,root,-)
 %doc CHANGES LICENSE README TODO VERSION doc/*.txt doc/*.pdf
@@ -83,15 +90,33 @@ cp -a %{SOURCE2} %{buildroot}%{_includedir}/%{shortname}/config.h
 %{_libdir}/*.so
 
 %changelog
-* Tue Sep 16 2014 Jan Grulich <jgrulich@redhat.com> - 1.4.4-10.20101004cvs
-- Add detection for aarch64
-  Resolves: bz#1141907
+* Fri Nov 14 2014 Tom Callaway <spot@fedoraproject.org> - 1.5.0-2
+- fix library linking typo
 
-* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.4.4-9.20101004cvs
-- Mass rebuild 2014-01-24
+* Fri Nov 14 2014 Tom Callaway <spot@fedoraproject.org>
+- api changes between 1.4.4 and 1.5.0, bump sover to 1.0.0
+- fix linking issue to make proper libsrtp.so.1
 
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.4.4-8.20101004cvs
-- Mass rebuild 2013-12-27
+* Fri Oct 31 2014 Leif Madsen <leif@leifmadsen.com> - 1.5.0-1
+- Update for 1.5.0 release.
+
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-13.20101004cvs
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-12.20101004cvs
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Thu May 15 2014 Dennis Gilmore <dennis@ausil.us> - 1.4.4-11.20101004cvs
+- update the config.h header aarch64 is a 64 bit arch though there is no multilib
+
+* Mon Feb 10 2014 Tom Callaway <spot@fedoraproject.org> - 1.4.4-10.20101004cvs
+- rename internal functions to avoid conflicts (bz 956340)
+
+* Mon Dec 30 2013 Tom Callaway <spot@fedoraproject.org> - 1.4.4-9.20101004cvs
+- apply fix for CVE-2013-2139 from https://github.com/cisco/libsrtp/pull/27
+
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-8.20101004cvs
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-7.20101004cvs
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
