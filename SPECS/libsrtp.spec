@@ -1,7 +1,7 @@
 %global shortname srtp
 
 Name:		libsrtp
-Version:	1.5.0
+Version:	1.5.2
 Release:	2%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
@@ -15,7 +15,7 @@ Source2:	config.h
 
 # Seriously. Who doesn't do shared libs these days?
 # And how does Chromium always manage to find these projects and use them?
-Patch0:		libsrtp-1.5.0-shared.patch
+Patch0:		libsrtp-1.5.2-shared.patch
 Patch1:		libsrtp-srtp_aes_encrypt.patch
 Patch2:		libsrtp-sha1-name-fix.patch
 

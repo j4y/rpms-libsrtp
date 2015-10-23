@@ -1,6 +1,6 @@
-diff -up libsrtp-1.5.0/Makefile.in.shared libsrtp-1.5.0/Makefile.in
---- libsrtp-1.5.0/Makefile.in.shared	2014-10-13 10:35:33.000000000 -0400
-+++ libsrtp-1.5.0/Makefile.in	2014-11-14 10:14:01.604954699 -0500
+diff -up libsrtp-1.5.2/Makefile.in.shared libsrtp-1.5.2/Makefile.in
+--- libsrtp-1.5.2/Makefile.in.shared	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.2/Makefile.in	2014-11-14 10:14:01.604954699 -0500
 @@ -113,17 +113,13 @@ kernel  = crypto/kernel/crypto_kernel.o
  
  cryptobj =  $(ciphers) $(hashes) $(math) $(stat) $(kernel) $(replay)

@@ -1,6 +1,6 @@
-diff -rup libsrtp-1.5.0/crypto/hash/hmac.c libsrtp-1.5.0/crypto/hash/hmac.c
---- libsrtp-1.5.0/crypto/hash/hmac.c	2014-10-13 10:35:33.000000000 -0400
-+++ libsrtp-1.5.0/crypto/hash/hmac.c	2014-10-31 09:15:20.666474444 -0400
+diff -rup libsrtp-1.5.2/crypto/hash/hmac.c libsrtp-1.5.2/crypto/hash/hmac.c
+--- libsrtp-1.5.2/crypto/hash/hmac.c	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.2/crypto/hash/hmac.c	2014-10-31 09:15:20.666474444 -0400
 @@ -141,10 +141,10 @@ hmac_init(hmac_ctx_t *state, const uint8
    debug_print(mod_hmac, "ipad: %s", octet_string_hex_string(ipad, 64));
    
@@ -53,9 +53,9 @@ diff -rup libsrtp-1.5.0/crypto/hash/hmac.c libsrtp-1.5.0/crypto/hash/hmac.c
  
    /* copy hash_value to *result */
    for (i=0; i < tag_len; i++)    
-diff -rup libsrtp-1.5.0/crypto/hash/sha1.c libsrtp-1.5.0/crypto/hash/sha1.c
---- libsrtp-1.5.0/crypto/hash/sha1.c	2014-10-13 10:35:33.000000000 -0400
-+++ libsrtp-1.5.0/crypto/hash/sha1.c	2014-10-31 09:15:20.667474449 -0400
+diff -rup libsrtp-1.5.2/crypto/hash/sha1.c libsrtp-1.5.2/crypto/hash/sha1.c
+--- libsrtp-1.5.2/crypto/hash/sha1.c	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.2/crypto/hash/sha1.c	2014-10-31 09:15:20.667474449 -0400
 @@ -77,12 +77,12 @@ uint32_t SHA_K2 = 0x8F1BBCDC;   /* Kt fo
  uint32_t SHA_K3 = 0xCA62C1D6;   /* Kt for 60 <= t <= 79 */
  
@@ -118,9 +118,9 @@ diff -rup libsrtp-1.5.0/crypto/hash/sha1.c libsrtp-1.5.0/crypto/hash/sha1.c
    uint32_t A, B, C, D, E, TEMP;
    uint32_t W[80];  
    int i, t;
-diff -rup libsrtp-1.5.0/crypto/include/sha1.h libsrtp-1.5.0/crypto/include/sha1.h
---- libsrtp-1.5.0/crypto/include/sha1.h	2014-10-13 10:35:33.000000000 -0400
-+++ libsrtp-1.5.0/crypto/include/sha1.h	2014-10-31 09:16:10.367733196 -0400
+diff -rup libsrtp-1.5.2/crypto/include/sha1.h libsrtp-1.5.2/crypto/include/sha1.h
+--- libsrtp-1.5.2/crypto/include/sha1.h	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.2/crypto/include/sha1.h	2014-10-31 09:16:10.367733196 -0400
 @@ -103,7 +103,7 @@ typedef struct {
   */
  
@@ -156,9 +156,9 @@ diff -rup libsrtp-1.5.0/crypto/include/sha1.h libsrtp-1.5.0/crypto/include/sha1.
  
  #endif /* else OPENSSL */
       
-diff -rup libsrtp-1.5.0/crypto/test/sha1_driver.c libsrtp-1.5.0/crypto/test/sha1_driver.c
---- libsrtp-1.5.0/crypto/test/sha1_driver.c	2014-10-13 10:35:33.000000000 -0400
-+++ libsrtp-1.5.0/crypto/test/sha1_driver.c	2014-10-31 09:15:20.668474454 -0400
+diff -rup libsrtp-1.5.2/crypto/test/sha1_driver.c libsrtp-1.5.2/crypto/test/sha1_driver.c
+--- libsrtp-1.5.2/crypto/test/sha1_driver.c	2014-10-13 10:35:33.000000000 -0400
++++ libsrtp-1.5.2/crypto/test/sha1_driver.c	2014-10-31 09:15:20.668474454 -0400
 @@ -113,9 +113,9 @@ sha1_test_case_validate(const hash_test_
    if (test_case->data_len > MAX_HASH_DATA_LEN)
      return err_status_bad_param;
