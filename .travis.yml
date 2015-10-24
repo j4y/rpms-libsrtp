@@ -4,10 +4,10 @@ env:
 services:
   - docker
 script:
- # Run tests in Container
- - sudo docker import http://buildlogs.centos.org/centos/7/docker/CentOS-7-20140625-x86_64-docker_01.img.tar.xz centos7
- #- sudo docker run -t -i centos7 /bin/bash -c "rpmbuild -ba SPECS/libsrtp.spec"
- #- sudo docker run -t -i centos7 /bin/bash -c "uname -a"
+## Run tests in Container
+#- sudo docker import http://buildlogs.centos.org/centos/7/docker/CentOS-7-20140625-x86_64-docker_01.img.tar.xz centos7
+#- sudo docker run -t -i centos7 /bin/bash -c "rpmbuild -ba SPECS/libsrtp.spec"
+#- sudo docker run -t -i centos7 /bin/bash -c "uname -a"
  - sudo docker pull centos
  - sudo docker run -t -i centos:latest /bin/bash
  - sudo docker ps
