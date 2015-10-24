@@ -1,14 +1,7 @@
-sudo: false
-addons:
-  apt:
-    sources:
-    # holds gcc 4.9
-    - ubuntu-toolchain-r-test
-    # holds cmake 3.2.3
-    - george-edison55-precise-backports
-    # holds boost 1.55
-    - boost-latest
-    packages:
-    - rpm
+sudo: required
+env:
+  - OS_TYPE=centos OS_VERSION=6
+services:
+  - docker
 script:
   - rpmbuild -ba SPECS/libsrtp.spec
