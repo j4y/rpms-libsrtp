@@ -9,6 +9,6 @@ addons:
     # holds boost 1.55
     - boost-latest
     packages:
-    - rpmbuild
+    - rpm
 script:
   - rpmbuild -ba SPECS/libsrtp.spec
