@@ -4,7 +4,7 @@ env:
 services:
   - docker
 script:
- - docker pull centos/latest
+ - docker pull centos
  - sudo docker import http://buildlogs.centos.org/centos/7/docker/CentOS-7-20140625-x86_64-docker_01.img.tar.xz centos7
  - sudo docker images
  #- sudo docker run -t -i centos7 /bin/bash -c "ls -la ~"
