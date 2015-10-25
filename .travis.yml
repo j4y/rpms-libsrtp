@@ -7,6 +7,6 @@ script:
  - sudo docker import http://buildlogs.centos.org/centos/7/docker/CentOS-7-20140625-x86_64-docker_01.img.tar.xz centos7
  - sudo docker images
  - sudo docker run -t -i centos7 /bin/bash -c "ls -la ~"
- #- sudo docker ps
+ - sudo docker ps
  #- sudo docker run --rm=true -v `pwd`:ble-apache:rw weldpua2008/docker-ansible:${OS_TYPE}${OS_VERSION}_v${ANSIBLE_VERSION} /bin/bash -c "/ansible-apache/tests/test-in-docker-image.sh ${OS_TYPE} ${OS_VERSION} ${ANSIBLE_VERSION}"
  #- sudo docker run --rm=true -v `pwd`:/ansible-apache:rw weldpua2008/docker-ansible:${OS_TYPE}${OS_VERSION}_v${ANSIBLE_VERSION} /bin/bash -c "/ansible-apache/tests/test-in-docker-image.sh ${OS_TYPE} ${OS_VERSION} ${ANSIBLE_VERSION}"
