@@ -9,6 +9,7 @@ before_script:
 - source <(curl -sL https://raw.githubusercontent.com/zuazo/docker-in-travis/master/scripts/start_docker.sh)
 
 script:
+- sudo yum install rpm-build
 - rpmbuild -ba ./SPECS/libsrtp.spec
 
 after_failure: cat docker_daemon.log
