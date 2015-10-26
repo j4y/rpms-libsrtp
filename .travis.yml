@@ -1,15 +1,14 @@
-sudo: required
-env:
-  - OS_TYPE=centos OS_VERSION=6
-services:
-  - docker
-script:
- - docker pull centos
- - sudo docker import http://buildlogs.centos.org/centos/7/docker/CentOS-7-20140625-x86_64-docker_01.img.tar.xz centos7
- - sudo docker images
- #- sudo docker run -t -i centos7 /bin/bash -c "ls -la ~"
- - sudo docker run -d -p 127.0.0.1:80:4567 centos7 
+sudo: true
 
- - sudo docker ps
- #- sudo docker run --rm=true -v `pwd`:ble-apache:rw weldpua2008/docker-ansible:${OS_TYPE}${OS_VERSION}_v${ANSIBLE_VERSION} /bin/bash -c "/ansible-apache/tests/test-in-docker-image.sh ${OS_TYPE} ${OS_VERSION} ${ANSIBLE_VERSION}"
- #- sudo docker run --rm=true -v `pwd`:/ansible-apache:rw weldpua2008/docker-ansible:${OS_TYPE}${OS_VERSION}_v${ANSIBLE_VERSION} /bin/bash -c "/ansible-apache/tests/test-in-docker-image.sh ${OS_TYPE} ${OS_VERSION} ${ANSIBLE_VERSION}"
+env:
+- DOCKERFILE_LOCATION=centos-7
+- DOCKERFILE_LOCATION=fedora-22
+
+
+before_script:
+- source <(curl -sL https://raw.githubusercontent.com/zuazo/docker-in-travis/master/scripts/start_docker.sh)
+
+script:
+- rpmbuild -ba ./SPECS/libsrtp.spec
+
+after_failure: cat docker_daemon.log
